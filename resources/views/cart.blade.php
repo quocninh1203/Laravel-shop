@@ -5,6 +5,9 @@
 .text-success{
   color: #278c04 !important;
 }
+.text-danger{
+  color: #d61808 !important;
+}
 
 </style>
 <main class="pt-90">
@@ -105,12 +108,22 @@
             </tbody>
           </table>
           <div class="cart-table-footer">
+          @if(!Session::has("coupon"))        
             <form action="{{route('cart.coupon.apply')}}" method="POST" class="position-relative bg-body">
             @csrf 
-            <input class="form-control" type="text" name="coupon_code" placeholder="Coupon Code" value="@if(Session::has('coupon')) {{Session::get('coupon')['code']}} Applied! @endif">
+            <input class="form-control" type="text" name="coupon_code" placeholder="Coupon Code" value="">
               <input class="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4" type="submit"
                 value="APPLY COUPON">
             </form>
+            @else
+            <form action="{{route('cart.coupon.remove')}}" method="POST" class="position-relative bg-body">
+            @csrf
+            @method('DELETE') 
+            <input class="form-control" type="text" name="coupon_code" placeholder="Coupon Code" value="@if(Session::has('coupon')) {{Session::get('coupon')['code']}} Applied! @endif">
+              <input class="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4" type="submit"
+                value="REMOVE COUPON">
+            </form>
+            @endif
                   <form method="POST" action="{{route('cart.empty')}}">
                   @csrf
                   @method('DELETE')
@@ -189,7 +202,7 @@
             </div>
             <div class="mobile_fixed-btn_wrapper">
               <div class="button-wrapper container">
-                <a href="checkout.html" class="btn btn-primary btn-checkout">PROCEED TO CHECKOUT</a>
+                <a href="{{route('cart.checkout')}}" class="btn btn-primary btn-checkout">PROCEED TO CHECKOUT</a>
               </div>
             </div>
           </div>

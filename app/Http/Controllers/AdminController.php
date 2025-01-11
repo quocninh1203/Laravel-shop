@@ -7,6 +7,12 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Coupon;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
+use App\Models\Contact;
+// use App\Models\Slide;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
@@ -15,12 +21,57 @@ use Intervention\Image\Laravel\Facades\Image;
 class AdminController extends Controller
 {
     public function index(){
-        return view('admin.index');
+        $orders = Order::orderBy('created_at','DESC')->get()->take(10);
+        $dashboardDatas = DB::select("Select sum(total) As TotalAmount,
+        sum(if(status='ordered',total,0)) As TotalOrderedAmount,
+        sum(if(status='delivered',total,0)) As TotalDeliveredAmount,
+        sum(if(status='canceled',total,0)) As TotalCanceledAmount,
+        Count(*) As Total,
+        sum(if(status='ordered',1,0)) As TotalOrdered,
+        sum(if(status='delivered',1,0)) As TotalDelivered,
+        sum(if(status='canceled',1,0)) As TotalCanceled
+        From Orders
+        
+        ");
+        $monthlyDatas = DB::select("SELECT 
+    M.id AS MonthNo, 
+    M.name AS MonthName,
+    IFNULL(D.TotalAmount, 0) AS TotalAmount,
+    IFNULL(D.TotalOrderedAmount, 0) AS TotalOrderedAmount,
+    IFNULL(D.TotalDeliveredAmount, 0) AS TotalDeliveredAmount,
+    IFNULL(D.TotalCanceledAmount, 0) AS TotalCanceledAmount
+FROM month_names M
+LEFT JOIN (
+    SELECT 
+        MONTH(created_at) AS MonthNo,
+        SUM(total) AS TotalAmount,
+        SUM(IF(status = 'ordered', total, 0)) AS TotalOrderedAmount,
+        SUM(IF(status = 'delivered', total, 0)) AS TotalDeliveredAmount,
+        SUM(IF(status = 'canceled', total, 0)) AS TotalCanceledAmount
+    FROM Orders 
+    WHERE YEAR(created_at) = YEAR(NOW())
+    GROUP BY YEAR(created_at), MONTH(created_at)
+) D ON D.MonthNo = M.id;
+");
+
+$AmountM = implode(',',collect($monthlyDatas)->pluck('TotalAmount')->toArray());
+$OrderedAmountM = implode(',',collect($monthlyDatas)->pluck('TotalOrderedAmount')->toArray());
+$DeliveredAmountM = implode(',',collect($monthlyDatas)->pluck('TotalDeliveredAmount')->toArray()); 
+$CanceledAmountM = implode(',',collect($monthlyDatas)->pluck('TotalCanceledAmount')->toArray());
+
+$TotalAmount = collect($monthlyDatas)->sum('TotalAmount');
+$TotalOrderedAmount = collect($monthlyDatas)->sum('TotalOrderedAmount');
+$TotalDeliveredAmount = collect($monthlyDatas)->sum('TotalDeliveredAmount');
+$TotalCanceledAmount = collect($monthlyDatas)->sum('TotalCanceledAmount');
+        
+        return view('admin.index',compact('orders','dashboardDatas','AmountM','OrderedAmountM',
+        'DeliveredAmountM','CanceledAmountM','TotalAmount','TotalOrderedAmount','TotalDeliveredAmount','TotalCanceledAmount'));
+
     }
 
     public function brands(){
-        $brands = Brand::orderBy('id','DESC')->paginate(10);
-        return view('admin.brands',compact('brands'));
+        $brands = Brand::withCount('products')->paginate(10);
+    return view('admin.brands', compact('brands'));
     }
 
     public function add_brand(){
@@ -488,4 +539,58 @@ public function coupon_delete($id)
         $coupon->delete();
         return redirect()->route('admin.coupons')->with('status','Coupon has been deleted successfully !');
 }
+public function orders()
+{
+        $orders = Order::orderBy('created_at','DESC')->paginate(12);
+        return view("admin.orders",compact('orders'));
+}
+
+public function order_details($order_id){
+    $order = Order::find($order_id);
+      $orderItems = OrderItem::where('order_id',$order_id)->orderBy('id')->paginate(12);
+      $transaction = Transaction::where('order_id',$order_id)->first();
+      return view("admin.order-details",compact('order','orderItems','transaction'));
+}
+
+public function update_order_status(Request $request){        
+    $order = Order::find($request->order_id);
+    $order->status = $request->order_status;
+    if($request->order_status=='delivered')
+    {
+        $order->delivered_date = Carbon::now();
+    }
+    else if($request->order_status=='canceled')
+    {
+        $order->canceled_date = Carbon::now();
+    }        
+    $order->save();
+    if($request->order_status=='delivered')
+    {
+        $transaction = Transaction::where('order_id',$request->order_id)->first();
+        $transaction->status = "approved";
+        $transaction->save();
+    }
+    return back()->with("status", "Status changed successfully!");
+}
+
+public function contacts()
+{
+ $contacts = Contact::orderBy('created_at','DESC')->paginate(10);
+ return view('admin.contacts',compact('contacts'));
+
+}
+
+public function contact_delete($id){
+ $contact = Contact::find($id);
+ $contact->delete();
+ return redirect()->route('admin.contacts')->with("status","Contact deleted successfully");
+}
+
+public function search(Request $request){
+    $query = $request->input('query');
+    $results = Product::where('name','LIKE',"%{$query}%")->get()->take(8);
+    return response()->json($results);
+}
+
+
 }

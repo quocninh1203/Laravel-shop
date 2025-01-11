@@ -28,6 +28,7 @@ Route::post('/cart/apply-coupon',[CartController::class,'apply_coupon_code'])->n
 Route::delete('/cart/remove-coupon',[CartController::class,'remove_coupon_code'])->name('cart.coupon.remove');
 
 
+
 Route::post('/wishlist/add',[WishlistController::class,'add_to_wishlist'])->name('wishlist.add');
 Route::get('/wishlist',[WishlistController::class,'index'])->name('wishlist.index');
 Route::delete('/wishlist/remove/{rowId}',[WishlistController::class,'remove_item'])->name('wishlist.item.remove');
@@ -35,8 +36,21 @@ Route::delete('/wishlist/clear',[WishlistController::class,'empty_wishlist'])->n
 Route::post('/wishlist/move-to-cart/{rowId}',[WishlistController::class,'move_to_cart'])->name('wishlist.move.to.cart');
 
 
+Route::get('/checkout',[CartController::class,'checkout'])->name('cart.checkout');
+Route::post('/place-an-order',[CartController::class,'place_an_order'])->name('cart.place.an.order');
+Route::get('/order-confirmation',[CartController::class,'order_confirmation'])->name('cart.order.confirmation');
+
+Route::get('/contact-us',[HomeController::class,'contact'])->name('home.contact');
+Route::post('/contact/store',[HomeController::class,'contact_store'])->name('home.contact.store');
+
+
+Route::get('/search',[HomeController::class,'search'])->name('home.search');
+
 Route::middleware(['auth'])->group(function(){
     Route::get('/account-dashboard', [UserController::class, 'index'])->name('user.index');
+    Route::get('/account-orders',[UserController::class,'orders'])->name('user.orders');
+    Route::get('/account-order/{order_id}/details',[UserController::class,'order_details'])->name('user.order.details');
+    Route::put('/account-order/cancel-order',[UserController::class,'order_cancel'])->name('user.order.cancel');
 });
 
 
@@ -73,4 +87,13 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
     Route::put('/admin/coupon/update',[AdminController::class,'coupon_update'])->name('admin.coupon.update');
     Route::delete('/admin/coupon/{id}/delete',[AdminController::class,'coupon_delete'])->name('admin.coupon.delete');
 
+
+    Route::get('/admin/orders',[AdminController::class,'orders'])->name('admin.orders');
+    Route::get('/admin/order/items/{order_id}',[AdminController::class,'order_details'])->name('admin.order.details');
+    Route::put('/admin/order/update-status',[AdminController::class,'update_order_status'])->name('admin.order.status.update');
+
+    Route::get('/admin/contact',[AdminController::class,'contacts'])->name('admin.contacts');
+    Route::delete('/admin/contact/{id}/delete',[AdminController::class,'contact_delete'])->name('admin.contact.delete');
+
+    Route::get('/admin/search',[AdminController::class,'search'])->name('admin.search');
 });

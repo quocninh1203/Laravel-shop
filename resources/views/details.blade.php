@@ -244,7 +244,7 @@
             {{$product->description}}
             </div>
           </div>
-          <div class="tab-pane fade" id="tab-additional-info" role="tabpanel" aria-labelledby="tab-additional-info-tab">
+          <!-- <div class="tab-pane fade" id="tab-additional-info" role="tabpanel" aria-labelledby="tab-additional-info-tab">
             <div class="product-single__addtional-info">
               <div class="item">
                 <label class="h6">Weight</label>
@@ -267,8 +267,8 @@
                 <span>Relaxed fit shirt-style dress with a rugged</span>
               </div>
             </div>
-          </div>
-          <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
+          </div> -->
+          <!-- <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
             <h2 class="product-single__reviews-title">Reviews</h2>
             <div class="product-single__reviews-list">
               <div class="product-single__reviews-item">
@@ -394,7 +394,7 @@
                 </div>
               </form>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>

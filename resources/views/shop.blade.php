@@ -67,7 +67,7 @@
 
 
 
-        <div class="accordion" id="color-filters">
+        <!-- <div class="accordion" id="color-filters">
           <div class="accordion-item mb-4 pb-3">
             <h5 class="accordion-header" id="accordion-heading-1">
               <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button" data-bs-toggle="collapse"
@@ -99,9 +99,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-
+<!-- 
         <div class="accordion" id="size-filters">
           <div class="accordion-item mb-4 pb-3">
             <h5 class="accordion-header" id="accordion-heading-size">
@@ -130,7 +130,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="accordion" id="brand-filters">
@@ -228,14 +228,37 @@
                   <div class="slideshow-text container p-3 p-xl-5">
                     <h2
                       class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                      Women's <br /><strong>ACCESSORIES</strong></h2>
-                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                      update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</h6>
+                      ARRIVAL <br /><strong>LAPTOPS</strong></h2>
+                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5">"Upgrade your tech with the best laptops. 
+                      Discover cutting-edge styles, powerful performance, and timeless innovation!"</h6>
                   </div>
                 </div>
                 <div class="slide-split_media position-relative">
                   <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                    <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
+                    <img loading="lazy" src="assets/images/shop/shop_banner3.png
+                    " width="630" height="450"
+                      alt="NTH's Laptop Store" class="slideshow-bg__img object-fit-cover" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
+                <div class="slide-split_text position-relative d-flex align-items-center"
+                  style="background-color: #f5e6e0;">
+                  <div class="slideshow-text container p-3 p-xl-5">
+                    <h2
+                      class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
+                      ARRIVAL <br /><strong>LAPTOPS</strong></h2>
+                      <p class="mb-0 animate animate_fade animate_btt animate_delay-5">"Upgrade your tech with the best laptops. 
+                      Discover cutting-edge styles, powerful performance, and timeless innovation!"</h6>
+                  </div>
+                </div>
+                <div class="slide-split_media position-relative">
+                  <div class="slideshow-bg" style="background-color: #f5e6e0;">
+                    <img loading="lazy" src="assets/images/shop/shop_banner3.png
+                    " width="630" height="450"
                       alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                   </div>
                 </div>
@@ -249,35 +272,15 @@
                   <div class="slideshow-text container p-3 p-xl-5">
                     <h2
                       class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                      Women's <br /><strong>ACCESSORIES</strong></h2>
-                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                      update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</h6>
+                      ARRIVAL <br /><strong>LAPTOPS</strong></h2>
+                      <p class="mb-0 animate animate_fade animate_btt animate_delay-5">"Upgrade your tech with the best laptops. 
+                      Discover cutting-edge styles, powerful performance, and timeless innovation!"</h6>
                   </div>
                 </div>
                 <div class="slide-split_media position-relative">
                   <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                    <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
-                      alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
-                <div class="slide-split_text position-relative d-flex align-items-center"
-                  style="background-color: #f5e6e0;">
-                  <div class="slideshow-text container p-3 p-xl-5">
-                    <h2
-                      class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                      Women's <br /><strong>ACCESSORIES</strong></h2>
-                    <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                      update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</h6>
-                  </div>
-                </div>
-                <div class="slide-split_media position-relative">
-                  <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                    <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
+                    <img loading="lazy" src="assets/images/shop/shop_banner3.png
+                    " width="630" height="450"
                       alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                   </div>
                 </div>
